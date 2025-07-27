@@ -29,16 +29,16 @@ System.out.println(result[0]+"and"+result[1]);
 price = scrapeRM(2, result);
 }
 
-/* else if(sep == 3){
+ else if(sep == 3){
 int[]input = {10,10};
 String[] character = {"GE","PE","SD","A","D","G","E"}; //Gold Steel E, plat E,silver d,A,D, G,  E
 String[] sizeid = {"7"};// full
 
 
     int[] result = Soundpost.determineroute(character,sizeid, input, SKU);
-price = scrapeLM(3, result);
+price = scrapeRM(3, result);
 
-} */
+} 
 
 
 
@@ -97,6 +97,17 @@ if(input[1] == 0){
       last = shadowContent.getText();
 
 }
+
+else if(pathway == 3){ // for PI
+
+String[][] productcodes = {{"41414795231275"},{"41414794870827"},{"41414794936363"},{"41414794903595"},{"41414795034667"},{"41414794969131"},{"41414795001899"}}; //Gold Steel E, plat E,silver d,A,D, G (Presumed silver?),  E
+
+driver.get("https://remenyi.com/#4a75/fullscreen/m=and&q="+productcodes[input[0]][input[1]]);
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+WebElement shadowContent = driver.findElement(By.id("product-regular-price"));
+      last = shadowContent.getText();
+}
+
 driver.quit();
 return  last;
 }

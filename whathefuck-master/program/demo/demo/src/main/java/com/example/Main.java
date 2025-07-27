@@ -37,7 +37,7 @@ public class Main extends GSpreadsheets  {
 
         
        
-  printstuff("EP","A3:A17",3,2);
+  printstuff("EP","A2:A25",2,2);
 //longingmclongquade.identifierLM("129",1);
  //System.out.println(identifierSP("1293/4",2));
 

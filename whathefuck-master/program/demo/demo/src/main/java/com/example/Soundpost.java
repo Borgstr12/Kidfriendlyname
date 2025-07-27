@@ -1,7 +1,7 @@
 package com.example;
 
 import java.time.Duration;
-
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,19 +23,32 @@ String[] character = {"131","32A","32","33","29","30"}; //A,DS,DA,G,E,EW
  String [] sizeid = {"1/2","3/4","1"}; //small -> large
 
     int[] newroute = determineroute(character, sizeid, input, SKU);
-   returnvalue = scrapeSP(1,newroute);
+   returnvalue = scrapeSP(1,newroute,SKU);
 }
 
       if(sep== 2) {
 
 int[]input = {10,10};
 
-//---------------------
-      String [] sizeid = {"04", "0334","0314", "03",}; //4/4 gold, 1/2, 3/4, 4/4 normal              
-String[] character = {"A","D","G","E"};
-                                                                                        //EP
+
+if(SKU.contains("04")){
+
+String [] sizeid = {"04"};             
+String[] character = {"A","D","GS","G","E"}; //A,D,GS,G,E
 int[] newroute = determineroute(character, sizeid, input, SKU);
-returnvalue = scrapeSP(2,newroute);
+returnvalue = scrapeSP(2,newroute,SKU);
+} else{
+
+      String [] sizeid = { "0334","0314", "03"}; // 1/2, 3/4, 4/4 normal              
+String[] character = {"A","D","G","ESL","ESB","EGL","EGB","EP","E"};
+int[] newroute = determineroute(character, sizeid, input, SKU);
+returnvalue = scrapeSP(2,newroute,SKU);
+
+
+}
+      
+                                                                                        //EP
+
 } 
 //-----------------------------------------------------------------------
 
@@ -48,25 +61,16 @@ String[] sizeid = {"7"};// full
 
 
     int[] newroute = determineroute(character,sizeid, input, SKU);
-   returnvalue = scrapeSP(3,newroute);
+   returnvalue = scrapeSP(3,newroute,SKU);
 }
-//System.out.println("char:"+input[0]+"and size:"+input[1]);   
+   
 
 return returnvalue;
 
 
 }
 
-/*public static String getelementbycssselector(String identification, WebDriver input){
-     //  System.setProperty("webdriver.chrome.driver","C:\\Users\\info\\Desktop\\demo\\demo\\src\\drivers\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe"); 
-      
-input.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-      WebElement shadowContent = input.findElement(By.xpath(identification)); 
-      return shadowContent.getText();
 
-
-
-}*/
 
       
 
@@ -103,7 +107,7 @@ return identical;
       }
 
 // Subsheet, input
-       public static String scrapeSP(int pathway, int[] input) {
+       public static String scrapeSP(int pathway, int[] input, String SKU) {
 //System.setProperty("webdriver.chrome.driver","C:\\Users\\info\\Desktop\\demo\\demo\\src\\drivers\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
  WebDriver driver= new ChromeDriver();
     
@@ -124,14 +128,14 @@ driver.get("https://www.thesoundpost.com/en/product/search?keywords="+productcod
 
       }
     else if (pathway == 2){                       
-// ADG,EGBALLsilvers
-//AALUM,DS,GG,EBALL,Gsilver
+// A,D,G,ESL,ESB,EGL,EGB,platnum,E
+//AALUM,DS,Gsilver,GG,EBALL
+String DNE = "SBH06X3";
 
+      String[][] productcodesnongold = {{"SEP123","SEP121","SEP12H"},{"SEP153","SEP151","SEP15H"},{"SEP163","SEP161","SEP16H"},{DNE,DNE,DNE},{DNE,DNE,DNE},{DNE,DNE,"SEP10MB"},{DNE,DNE,"SEP10ML"},{DNE,DNE,"SEP11HPB"},{"SEP113","SEP111","SEP11HB"}};
+      String[] productcodesgold = {"SEPG12","SEPG15","SEPG16","SEPG17","SEPG11B",};
 
-      String[][] productcodesnongold = {{"SEP12H","SEP123","SEP121","SEP12H"},{"SEP15H","SEP153","SEP151","SEP15H"},{"SEP16H","SEP163","SEP161","SEP16H"},{"DNE","SEP113","SEP111","SEP11HB"}};
-      String[] productcodesgold = {"SEPG12","SEPG15","SEPG17","SEPG11B","SEPG16"};
-
-        if(input[1] == 0){
+        if(SKU.contains("04")){
           driver.get("https://www.thesoundpost.com/en/product/search?keywords="+productcodesgold[input[0]]+"&submitted=1"); //use the first number to decide product code
           }else{
               driver.get("https://www.thesoundpost.com/en/product/search?keywords="+productcodesnongold[input[0]][input[1]]+"&submitted=1");
@@ -158,6 +162,7 @@ driver.get("https://www.thesoundpost.com/en/product/search?keywords="+productcod
 
 
         }
+        
 driver.quit();
       return last;  
 

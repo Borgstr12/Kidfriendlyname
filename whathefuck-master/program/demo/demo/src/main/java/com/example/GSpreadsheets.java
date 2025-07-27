@@ -31,12 +31,12 @@ import java.lang.Object;
 public class GSpreadsheets {
 public static Sheets sheetservice; 
 private static String name = "SCRAPPER";
-public static String SPREADSHEETID = "1zk3WktBgXZjLD0JRQLMPU57ww75LMROiGCB6vqRviy4";
+public static String SPREADSHEETID = "1V3Zgb_b53JgiN9OdHKGCLSEVV4tfjmN1zpJo40AOYtk";
 
 
 
 static List<String>  scope = Arrays.asList(SheetsScopes.SPREADSHEETS);
-         private static String CREDENTIALS_FILE_PATH = "credentials.json";
+         private static String CREDENTIALS_FILE_PATH = "credentialsIS.json";
 
  public static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
       throws IOException{
@@ -84,7 +84,7 @@ String range = subsheet+"!"+scope; //format is SUBTITLE!MINRANGE:MAXRANGE
      for(int x = 0; x<words.size(); x++){
  ValueRange myIntegerList = new ValueRange().setValues(Arrays.asList(Arrays.asList(Soundpost.identifierSP(words.get(x).toString(),brand))));
 
-UpdateValuesResponse updating = service.spreadsheets().values().update(SPREADSHEETID, "H"+Integer.toString(x+2), myIntegerList).setValueInputOption("USER_ENTERED").execute();
+UpdateValuesResponse updating = service.spreadsheets().values().update(SPREADSHEETID, "J"+Integer.toString(x+2), myIntegerList).setValueInputOption("USER_ENTERED").execute();
       
       }
 } // this one is for printing soundpost
@@ -93,7 +93,7 @@ UpdateValuesResponse updating = service.spreadsheets().values().update(SPREADSHE
   for(int x = 0; x<words.size(); x++){ // loops through a set from A2-A10 or something
 ValueRange myIntegerList = new ValueRange().setValues(Arrays.asList(Arrays.asList(longingmclongquade.identifierLM(words.get(x).toString(),brand)))); // add a return value to longmcquade
 
-UpdateValuesResponse updating = service.spreadsheets().values().update(SPREADSHEETID, "I"+Integer.toString(x+2), myIntegerList).setValueInputOption("USER_ENTERED").execute();
+UpdateValuesResponse updating = service.spreadsheets().values().update(SPREADSHEETID, "K"+Integer.toString(x+2), myIntegerList).setValueInputOption("USER_ENTERED").execute();
 
  }
  }
@@ -102,7 +102,7 @@ UpdateValuesResponse updating = service.spreadsheets().values().update(SPREADSHE
   for(int x = 0; x<words.size(); x++){ // loops through a set from A2-A10 or something
 ValueRange myIntegerList = new ValueRange().setValues(Arrays.asList(Arrays.asList(remenyi.identifierRM(words.get(x).toString(),brand)))); // add a return value to longmcquade
 
-UpdateValuesResponse updating = service.spreadsheets().values().update(SPREADSHEETID, "J"+Integer.toString(x+2), myIntegerList).setValueInputOption("USER_ENTERED").execute();
+UpdateValuesResponse updating = service.spreadsheets().values().update(SPREADSHEETID, "L"+Integer.toString(x+2), myIntegerList).setValueInputOption("USER_ENTERED").execute();
 
  }
  }

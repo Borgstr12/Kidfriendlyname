@@ -14,20 +14,27 @@ if(sep ==1 ){
   String[] character = {"131","32A","32","33","29","30"}; //A,DS,DA,G,E,EW
  String [] sizeid = {"1/2","3/4","1"}; //largest to smallest if largest then size id remains DOM, placeholder = full
  int[] result = Soundpost.determineroute(character, sizeid, input, SKU);
- price = scrapeLM(1, result);
+ price = scrapeLM(1, result,SKU);
 
  // again, find the route
 
 } 
 else if(sep == 2){
     int[]input = {10,10};
-  String [] sizeid = {"04", "0334","0314", "03",}; //4/4 gold, 1/2, 3/4, 4/4 normal              
-String[] character = {"A","D","G","E"};
-int[] result = Soundpost.determineroute(character, sizeid, input, SKU);
-System.out.println(result[0]+"and"+result[1]);
-price = scrapeLM(2, result);
-}
+  if(SKU.contains("04")){
 
+String [] sizeid = {"04"};             
+String[] character = {"A","D","GS","G","E"}; //A,D,GS,G,E
+int[] newroute = Soundpost.determineroute(character, sizeid, input, SKU);
+price = scrapeLM(2,newroute,SKU);
+} else{
+
+      String [] sizeid = { "0334","0314", "03"}; // 1/2, 3/4, 4/4 normal              
+String[] character = {"A","D","G","ESL","ESB","EGL","EGB","EP","E"};
+int[] newroute = Soundpost.determineroute(character, sizeid, input, SKU);
+price = scrapeLM(2,newroute,SKU);
+}
+}
 else if(sep == 3){
 int[]input = {10,10};
 String[] character = {"GE","PE","SD","A","D","G","E"}; //Gold Steel E, plat E,silver d,A,D, G,  E
@@ -35,16 +42,16 @@ String[] sizeid = {"7"};// full
 
 
     int[] result = Soundpost.determineroute(character,sizeid, input, SKU);
-price = scrapeLM(3, result);
+price = scrapeLM(3, result,SKU);
 
 }
 
-   return price; 
+   
 
+
+return price; 
 }
-
-
-public static String scrapeLM(int pathway, int[] input) {
+public static String scrapeLM(int pathway, int[] input,String SKU) {
     String EXPENSIVE = "322021";
 
 WebDriver driver = new ChromeDriver();
@@ -70,12 +77,14 @@ last = shadowContent.getText();
 //AALUM,DS,GG,EBALL,Gsilver
 
 
-      String[][] productcodesnongold = {{"PLACEHOLDER",EXPENSIVE,EXPENSIVE,"903"},{"PLACEHOLDER","358216","358216",EXPENSIVE},{EXPENSIVE,EXPENSIVE,EXPENSIVE,EXPENSIVE},{EXPENSIVE,EXPENSIVE,EXPENSIVE,"174273"}};
+      String[][] productcodesnongold = {{EXPENSIVE,EXPENSIVE,"903"},{"358216","358216",EXPENSIVE},{EXPENSIVE,EXPENSIVE,EXPENSIVE},{EXPENSIVE,EXPENSIVE,EXPENSIVE},{EXPENSIVE,EXPENSIVE,EXPENSIVE},{EXPENSIVE,EXPENSIVE,EXPENSIVE},{EXPENSIVE,EXPENSIVE,"185020"},{EXPENSIVE,EXPENSIVE,"93741"},{EXPENSIVE,EXPENSIVE,"325691"}};
       String[] productcodesgold = {"396520",EXPENSIVE,EXPENSIVE,EXPENSIVE,EXPENSIVE};
-  if(input[1] == 0){
+// A,D,G,ESL,ESB,EGL,EGB,platnum,E
+//AALUM,DS,Gsilver,GG,EBALL
+
+          if(SKU.contains("04")){
           driver.get("https://www.long-mcquade.com/"+productcodesgold[input[0]]); //use the first number to decide product code
-         
-        }else{
+          }else{
               driver.get("https://www.long-mcquade.com/"+productcodesnongold[input[0]][input[1]]);
 
           }
